@@ -1,0 +1,29 @@
+.form_submit {
+    width: calc(100% - 10px);
+    background-color: var(--white);
+    transition: 0.25s;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: var(--font-size-m);
+    color: var(--black);
+    margin: 5px;
+    border: var(--border-red);
+    border-radius: var(--border-radius-btn);
+    transition: all 0.25s ease-in;
+}
+
+.form_submit:hover {
+    box-shadow: var(--box-shadow);
+}
+
+@media screen and (min-width: 1280px) {
+    .form_submit {
+        font-size: var(--font-size-m-1280);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .form_submit {
+        font-size: var(--font-size-m-900);
+    }
+}

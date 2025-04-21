@@ -1,0 +1,9 @@
+.index_message-wrap {
+    width: 70%;
+    height: 95%;
+    border: var(--border-red);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -1,0 +1,13 @@
+.message_info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info {
+    margin: 0 5px;
+    font-family: var(--font);
+    color: var(--black);
+    font-size: var(--font-size-xs);
+}

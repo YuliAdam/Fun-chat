@@ -1,0 +1,39 @@
+.login_form {
+    display: flex;
+    flex-direction: column;
+    min-width: 30%;
+}
+
+.form_login,
+.form_password,
+.form_label {
+    margin: 5px;
+    font-family: var(--font);
+    font-size: var(--font-size-m);
+    color: var(--black);
+}
+
+.form_validation-message {
+    margin: 0;
+    font-family: var(--font);
+    font-size: var(--font-size-xs);
+    color: var(--red);
+}
+
+@media screen and (min-width: 1280px) {
+
+    .form_login,
+    .form_password,
+    .form_label {
+        font-size: var(--font-size-m-1280)
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    .form_login,
+    .form_password,
+    .form_label {
+        font-size: var(--font-size-m-900)
+    }
+}

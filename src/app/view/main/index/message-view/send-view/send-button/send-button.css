@@ -1,0 +1,32 @@
+.send_button {
+    width: 30%;
+    margin: 10px;
+    font-family: var(--font);
+    font-size: var(--font-size-m);
+    color: var(--black);
+    padding: 0.3em 0.3em;
+    background: var(--white);
+    transition: 0.25s;
+    cursor: pointer;
+    background-color: var(--white);
+    border: var(--border-red);
+    transition: all 0.25s ease-in;
+}
+
+.send_button:hover {
+    box-shadow: var(--box-shadow);
+}
+
+@media screen and (min-width: 1280px) {
+
+    .send_button {
+        font-size: var(--font-size-m-1280)
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    .send_button {
+        font-size: var(--font-size-m-900)
+    }
+}

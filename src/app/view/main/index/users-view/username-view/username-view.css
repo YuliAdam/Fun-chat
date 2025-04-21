@@ -1,0 +1,23 @@
+.users_username {
+    margin: 5px;
+    font-family: var(--font);
+    font-size: var(--font-size-m);
+    color: var(--black);
+    border: var(--border-black);
+    border-radius: var(--border-radius-btn);
+    padding: 0.3em 0.3em;
+}
+
+@media screen and (min-width: 1280px) {
+
+    .users_username {
+        font-size: var(--font-size-m-1280)
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    .users_username {
+        font-size: var(--font-size-m-900)
+    }
+}

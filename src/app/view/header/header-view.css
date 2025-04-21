@@ -1,0 +1,32 @@
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-image: url('bla.jpg');
+    background-repeat: repeat-x;
+    background-size: contain;
+    background-position: center;
+}
+
+.header_title {
+    background-color: var(--white);
+    border: var(--border-red-bold);
+    padding: 0.3em 0.3em;
+    font-family: var(--font);
+    font-size: var(--font-size-l);
+    color: var(--black);
+    margin: 0;
+}
+
+@media screen and (min-width: 1280px) {
+    .header_title {
+        font-size: var(--font-size-l-1280);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .header_title {
+        font-size: var(--font-size-l-900);
+    }
+}

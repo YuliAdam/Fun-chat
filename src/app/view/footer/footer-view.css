@@ -1,0 +1,10 @@
+.footer {
+    font-family: var(--font);
+    color: var(--black);
+    font-size: var(--font-size-xs);
+    line-height: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

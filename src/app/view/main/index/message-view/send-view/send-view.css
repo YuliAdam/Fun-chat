@@ -1,0 +1,7 @@
+.message_send {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: var(--border-black);
+}

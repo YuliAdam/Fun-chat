@@ -1,0 +1,9 @@
+.index_users-wrap {
+    width: 30%;
+    height: 95%;
+    border: var(--border-red);
+    border-right: none;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}

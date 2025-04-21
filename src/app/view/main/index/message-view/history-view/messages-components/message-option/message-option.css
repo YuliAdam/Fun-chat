@@ -1,0 +1,30 @@
+.message_option {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.option_wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.option_state,
+.option_button {
+    font-family: var(--font);
+    color: var(--black);
+    font-size: var(--font-size-xs);
+    margin: 0 5px;
+}
+
+.option_button {
+    background-color: transparent;
+    border: transparent;
+    cursor: pointer;
+}
+
+.option_button:hover {
+    color: var(--red);
+}

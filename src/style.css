@@ -1,0 +1,81 @@
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --red: red;
+  --green: green;
+  --green-light: rgb(206, 250, 206);
+  --grey: rgb(85, 84, 84);
+  --grey-light: rgb(230, 230, 230);
+  --box-shadow: var(--red) 0px 5px 15px;
+  --font: 'fantasy';
+  --font-size-l: 3vw;
+  --font-size-l-1280: 38.4px;
+  --font-size-l-900: 27px;
+  --font-size-m: 1.5vw;
+  --font-size-m-1280: 1.2em;
+  --font-size-m-900: 13.5px;
+  --font-size-xs: 0.7em;
+  --border-red: 2px solid var(--red);
+  --border-black: 2px solid var(--black);
+  --border-red-bold: 5px solid var(--red);
+  --border-radius-btn: 10px;
+}
+
+html {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  position: relative;
+  background-color: var(--white);
+  width: calc(100% - 40px);
+  height: auto;
+  min-height: 100vh;
+  max-width: 1280px;
+  margin: auto;
+  align-content: center;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.opacity {
+  opacity: 0 !important;
+  cursor: default !important;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+::placeholder {
+  color: var();
+}
+
+*:focus {
+  outline: none;
+}
+
+.display-none {
+  display: none !important;
+}
+
+.over {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: var();
+  opacity: 0.9;
+  filter: blur(3px);
+}
+
+:disabled {
+  background: var(--grey);
+  opacity: 0.2;
+  pointer-events: none;
+}

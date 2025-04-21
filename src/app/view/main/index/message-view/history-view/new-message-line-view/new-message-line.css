@@ -1,0 +1,24 @@
+.history_new-message-line {
+    width: 100%;
+    margin: 5px 0;
+    font-family: var(--font);
+    font-size: var(--font-size-m);
+    color: var(--red);
+    border-bottom: var(--border-red);
+    padding: 0.3em 0.3em;
+    text-align: center;
+}
+
+@media screen and (min-width: 1280px) {
+
+    .history_new-message-line {
+        font-size: var(--font-size-m-1280)
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    .history_new-message-line {
+        font-size: var(--font-size-m-900)
+    }
+}

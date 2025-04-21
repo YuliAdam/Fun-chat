@@ -1,0 +1,46 @@
+.message_header {
+    height: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: var(--border-black);
+}
+
+.message_username,
+.message_online,
+.message_offline {
+    margin: 5px 20%;
+    font-family: var(--font);
+    font-size: var(--font-size-m);
+}
+
+.message_username {
+    color: var(--black);
+}
+
+.message_offline {
+    color: var(--red);
+}
+
+.message_online {
+    color: var(--green);
+}
+
+@media screen and (min-width: 1280px) {
+
+    .message_username,
+    .message_online,
+    .message_offline {
+        font-size: var(--font-size-m-1280)
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    .message_username,
+    .message_online,
+    .message_offline {
+        font-size: var(--font-size-m-900)
+    }
+}

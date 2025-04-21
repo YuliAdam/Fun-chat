@@ -1,0 +1,33 @@
+.histoty_wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    height: 70%;
+}
+
+.message_history {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.history_initial {
+    padding: 30% 0;
+    text-align: center;
+    font-family: var(--font);
+    font-size: var(--font-size-m);
+    color: var(--black);
+}
+
+@media screen and (min-width: 1280px) {
+    .history_initial {
+        font-size: var(--font-size-m-1280);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .history_initial {
+        font-size: var(--font-size-m-900);
+    }
+}

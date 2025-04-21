@@ -1,0 +1,23 @@
+.send_textarea {
+    width: 70%;
+    flex-grow: 1;
+    margin: 10px;
+    font-family: var(--font);
+    font-size: var(--font-size-m);
+    color: var(--black);
+    resize: none;
+}
+
+@media screen and (min-width: 1280px) {
+
+    .send_textarea {
+        font-size: var(--font-size-m-1280)
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    .send_textarea {
+        font-size: var(--font-size-m-900)
+    }
+}
