@@ -31,7 +31,8 @@ export class MyWebSocket {
     if (document.location.protocol === "https:") {
       scheme += "s";
     }
-    const serverUrl = scheme + "://" + document.location.hostname + ":4000";
+    const serverUrl =
+      scheme + "://" + "fun-chat-yuliadam.vercel.app" + ":4000";
     const connection = new WebSocket(serverUrl, "json");
     connection.onopen = function () {
       console.log("CONNECTED");
