@@ -31,7 +31,7 @@ export class MyWebSocket {
     if (document.location.protocol === "https:") {
       scheme += "s";
     }
-    const serverUrl =  + "ws://" + 'localhost' + ":4000";
+    const serverUrl = scheme + "://" + 'localhost' + ":4000";
     const connection = new WebSocket(serverUrl, "json");
     console.log(serverUrl);
     connection.onopen = function () {
