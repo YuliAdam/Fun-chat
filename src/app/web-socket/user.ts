@@ -10,6 +10,8 @@ import {
   ISocketType,
 } from "./web-socket-interface";
 
+const GENERAL_ERROR_MESSAGE = "Something went wrong, sorry";
+
 export class User {
   public username: string | null;
   public password: string | null;
@@ -19,6 +21,7 @@ export class User {
   public selectedUsername: string | null;
   public history: ISendMessageResponse[] | null;
   public sendingMessage: ISendMessageResponse | null;
+  public errorMessage: string;
   constructor() {
     this.username = null;
     this.isLogined = null;
@@ -28,6 +31,11 @@ export class User {
     this.selectedUsername = null;
     this.history = null;
     this.sendingMessage = null;
+    this.errorMessage = GENERAL_ERROR_MESSAGE;
+  }
+
+  public setErrorMessage(message: string) {
+    this.errorMessage = message;
   }
 
   public loginUser(
@@ -358,13 +366,15 @@ export class User {
   ) {
     const READED_TEXT = "readed";
     const messageId = responseObject.message.id;
-    this.history?.forEach((mess) => {
-      if (mess.id === messageId) {
-        app.index.messageView.historyComponent.messages.forEach((message) => {
-          message.optionComponent.stateComponent.setTextContent(READED_TEXT);
-        });
-      }
-    });
+    if (this.history) {
+      this.history.forEach((mess) => {
+        if (mess.id === messageId) {
+          app.index.messageView.historyComponent.messages.forEach((message) => {
+            message.optionComponent.stateComponent.setTextContent(READED_TEXT);
+          });
+        }
+      });
+    }
   }
 
   public deleteMessageRequest(
@@ -382,5 +392,25 @@ export class User {
     };
     console.log("delete send");
     connection.send(requestParams);
+    if (this.history) {
+      this.history = this.history.filter((mess) => mess.id !== message.id);
+    }
+  }
+
+  public deleteMessageResponseEvent(
+    responseObject: IMessageDeliveryStatusChangeResponse,
+    app: App,
+  ) {
+    const messageId = responseObject.message.id;
+    if (this.history) {
+      if (this.history) {
+        this.history = this.history.filter((mess) => mess.id !== messageId);
+      }
+    }
+    app.index.messageView.historyComponent.messages.forEach((message) => {
+      if (message.id === messageId) {
+        message.optionComponent.removeMessageFromHistory(message);
+      }
+    });
   }
 }

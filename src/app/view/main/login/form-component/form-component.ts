@@ -33,7 +33,6 @@ const labelText = {
 const VALIDATION_LOGIN_TEXT = "Length should be min 4 and max 12 characters";
 const VALIDATION_PASSWORD_TEXT =
   "Password should be min 4 and max 20 characters of different case";
-const ERROR_LOGINING_TEXT = "Username or password isn't right";
 const MIN_SYMBOL_NUM_BY_VALIDATION = 4;
 const MAX_SYMBOL_NUM_BY_USERNAME = 12;
 const MAX_SYMBOL_NUM_BY_PASSWORD = 20;
@@ -161,7 +160,6 @@ export class LoginForm extends FormComponent {
     const messageComponent = new BaseComponent({
       tag: "p",
       classList: CssClasses.validation,
-      textContent: ERROR_LOGINING_TEXT,
     });
     messageComponent.addClassIfHasNot("opacity");
     return messageComponent;
@@ -182,6 +180,7 @@ export class LoginForm extends FormComponent {
     this.addPasswordEnterEvent();
     this.addPasswordInputEvent();
   }
+
 
   private addloginEnterEvent() {
     this.loginComponent.addComponentEventListener(IEvents.keydown, (e) => {

@@ -72,6 +72,9 @@ export class FormButton extends ButtonComponent {
       header.navComponent.buttonsArr.logoutButtonComponent.showButton();
       formComponent.clearForm();
     } else {
+      formComponent.loginingMessage.setTextContent(
+        connection.user.errorMessage,
+      );
       formComponent.loginingMessage.removeClass("opacity");
       connection.user.clearUserAcessData();
     }

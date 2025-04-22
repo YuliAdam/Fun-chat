@@ -17,14 +17,16 @@ const CssClasses = {
 };
 
 export class HistoryMessageView extends View {
-  private textComponent: BaseComponent;
+  public textComponent: BaseComponent;
   public infoComponent: MessageInfoComponent;
   public optionComponent: MessageOptionComponent;
+  public id: string;
   constructor(message: ISendMessageResponse, connection: MyWebSocket) {
     const params: IBaseComponentParam = {
       classList: [],
     };
     super(params);
+    this.id = message.id;
     this.textComponent = this.createMessaggeText(message.text);
     this.infoComponent = this.getMessageInfo(message, connection);
     this.optionComponent = this.getMessageOption(message, connection);
@@ -39,9 +41,14 @@ export class HistoryMessageView extends View {
   public addToMessageStyle() {
     this.viewComponent.addClassIfHasNot(CssClasses.messageTo);
     this.textComponent.addClassIfHasNot(CssClasses.textTo);
-    this.optionComponent.addClassIfHasNot("opacity");
+    this.optionComponent.stateComponent.addClassIfHasNot("opacity");
     this.optionComponent.changeButtonComponent.hideButton();
     this.optionComponent.deleteButtonComponent.hideButton();
+  }
+
+  public replaceEditedMessage(text: string) {
+    this.textComponent.setTextContent(text);
+    this.optionComponent.showEditedStateComponent();
   }
 
   private configView() {

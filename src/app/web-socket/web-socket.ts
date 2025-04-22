@@ -2,11 +2,11 @@ import { App } from "../app";
 import { Router } from "../router/router";
 import { HeaderView } from "../view/header/header-view";
 import { HistoryView } from "../view/main/index/message-view/history-view/history-view";
+import { HistoryMessageView } from "../view/main/index/message-view/history-view/messages-components/message-view";
 import { MessageView } from "../view/main/index/message-view/message-view";
 import { LoginForm } from "../view/main/login/form-component/form-component";
 import { User } from "./user";
 import {
-  IErrorDescription,
   ISocketRequestFormat,
   ISocketResponseFormat,
   ISocketType,
@@ -26,12 +26,8 @@ export class MyWebSocket {
   }
 
   private connect() {
-    var scheme = "ws";
     console.log("start socket");
-    if (document.location.protocol === "https:") {
-      scheme += "s";
-    }
-    const serverUrl = 'ws' + "://" + 'localhost' + ":4000";
+    const serverUrl = "ws://localhost:4000";
     const connection = new WebSocket(serverUrl, "json");
     console.log(serverUrl);
     connection.onopen = function () {
@@ -84,10 +80,8 @@ export class MyWebSocket {
     historyComponent: HistoryView,
   ) {
     if (this.user.sendingMessage !== null) {
-      console.log(this.user.sendingMessage);
       callBack(historyComponent, this);
     } else {
-      console.log("wait");
       setTimeout(
         () => this.addSendingMessageAfterResponse(callBack, historyComponent),
         100,
@@ -106,11 +100,9 @@ export class MyWebSocket {
         console.log("login");
         user.setLoginUserParams(app, responseObject.payload.user, connection);
       }
-      if (
-        responseObject.type === ISocketType.ERROR &&
-        responseObject.payload.error === IErrorDescription.LOGIN_ERROR
-      ) {
+      if (responseObject.type === ISocketType.ERROR) {
         user.isLogined = false;
+        user.setErrorMessage(responseObject.payload.error);
       }
       if (responseObject.type === ISocketType.USER_LOGOUT) {
         console.log("logout");
@@ -173,15 +165,43 @@ export class MyWebSocket {
         responseObject.type === ISocketType.MSG_DELETE &&
         responseObject.id === null
       ) {
-        console.log("delete");
-        user.changeReadingStateResponseEvent(responseObject.payload, app);
+        user.deleteMessageResponseEvent(responseObject.payload, app);
+      }
+      if (
+        responseObject.type === ISocketType.MSG_EDIT &&
+        responseObject.id === null
+      ) {
+        console.log("edited");
+        connection.changeMessageResponse(
+          app,
+          responseObject.payload.message.id,
+          responseObject.payload.message.text,
+        );
       }
     };
+  }
+
+  public changeMessageRequest(messageId: string, text: string) {
+    const requestParams = {
+      id: "change",
+      type: ISocketType.MSG_EDIT,
+      payload: {
+        message: {
+          id: messageId,
+          text: text,
+        },
+      },
+    };
+    this.send(requestParams);
   }
 
   public static stringifyRequest(
     request: ISocketRequestFormat | ISocketResponseFormat,
   ): string {
     return JSON.stringify(request);
+  }
+
+  private changeMessageResponse(app: App, id: string, text: string) {
+    app.index.messageView.historyComponent.changeMessageById(id, text);
   }
 }

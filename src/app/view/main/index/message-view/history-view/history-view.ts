@@ -132,6 +132,14 @@ export class HistoryView extends View {
     messageFromComponent.viewComponent.scrollIntoView();
   }
 
+  public changeMessageById(messageId: string, text: string) {
+    this.messages.forEach((mess) => {
+      if (mess.id === messageId) {
+        mess.replaceEditedMessage(text);
+      }
+    });
+  }
+
   private addClickHistoryEvent(connection: MyWebSocket) {
     this.viewComponent.addComponentEventListener(IEvents.click, () =>
       this.readMessage(connection),

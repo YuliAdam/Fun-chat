@@ -49,9 +49,6 @@ export class Router {
     } else {
       if (route.path === Pages.INDEX && !connection.user.isLogined) {
         this.redirectToLogin(connection);
-      } else if (route.path === Pages.LOGIN && connection.user.isLogined) {
-        console.log('logined')
-        this.redirectToIndex(connection);
       } else {
         route.callBack();
         if (addToHistory) {
@@ -74,13 +71,6 @@ export class Router {
     const routLogin = this.routes.find((item) => item.path === Pages.LOGIN);
     if (routLogin) {
       this.navigate(routLogin.path, connection);
-    }
-  }
-
-  private redirectToIndex(connection: MyWebSocket): void {
-    const routIndex = this.routes.find((item) => item.path === Pages.INDEX);
-    if (routIndex) {
-      this.navigate(routIndex.path, connection);
     }
   }
 

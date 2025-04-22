@@ -9,6 +9,7 @@ import { ISendMessageResponse } from "../../../../../../../web-socket/web-socket
 import { User } from "../../../../../../../web-socket/user";
 import { MyWebSocket } from "../../../../../../../web-socket/web-socket";
 import { HistoryMessageView } from "../message-view";
+import { DialogView } from "./change-message-dialog/change-message-dialog";
 
 const CssClasses = {
   option: ["message_option"],
@@ -19,11 +20,14 @@ const CssClasses = {
 
 const CHANGE_BUTTON_TEXT = "change";
 const DELETE_BUTTON_TEXT = "delete";
+const EDITED_TEXT = "(edited)";
 
 export class MessageOptionComponent extends BaseComponent {
   public stateComponent: BaseComponent;
   public changeButtonComponent: ButtonComponent;
   public deleteButtonComponent: ButtonComponent;
+  public messageEditorComponent: DialogView;
+  public editedStateComponent: BaseComponent;
   constructor(
     message: ISendMessageResponse,
     connection: MyWebSocket,
@@ -36,7 +40,22 @@ export class MessageOptionComponent extends BaseComponent {
     this.stateComponent = this.createStateComponent(this.getStatus(message));
     this.changeButtonComponent = this.createChangeButtonComponent();
     this.deleteButtonComponent = this.createDeleteButtonComponent();
+    this.messageEditorComponent = this.getMessageEditorComponent(
+      connection,
+      historyMessage,
+    );
+    this.editedStateComponent = this.createEditedComponent(
+      message.status.isEdited,
+    );
     this.configComponent(message, connection.user, connection, historyMessage);
+  }
+
+  public hideEditedStateComponent() {
+    this.editedStateComponent.addClassIfHasNot("display-none");
+  }
+
+  public showEditedStateComponent() {
+    this.editedStateComponent.removeClass("display-none");
   }
 
   private configComponent(
@@ -49,9 +68,21 @@ export class MessageOptionComponent extends BaseComponent {
     wrapper.appendChildComponents([
       this.deleteButtonComponent,
       this.changeButtonComponent,
+      this.messageEditorComponent.viewComponent,
     ]);
     this.addDeleteMessageEvent(message, user, connection, historyMessageView);
-    this.appendChildComponents([wrapper, this.stateComponent]);
+    this.appendChildComponents([
+      wrapper,
+      this.editedStateComponent,
+      this.stateComponent,
+    ]);
+  }
+
+  private getMessageEditorComponent(
+    connection: MyWebSocket,
+    message: HistoryMessageView,
+  ) {
+    return new DialogView(message, connection);
   }
 
   private createStateComponent(state: string) {
@@ -61,6 +92,19 @@ export class MessageOptionComponent extends BaseComponent {
       textContent: state,
     };
     return new BaseComponent(params);
+  }
+
+  private createEditedComponent(isEdit: boolean) {
+    const params: IBaseComponentParam = {
+      tag: "p",
+      classList: CssClasses.state,
+      textContent: EDITED_TEXT,
+    };
+    const editedComponent = new BaseComponent(params);
+    if (!isEdit) {
+      editedComponent.addClassIfHasNot("display-none");
+    }
+    return editedComponent;
   }
 
   private getStatus(message: ISendMessageResponse) {
@@ -80,6 +124,9 @@ export class MessageOptionComponent extends BaseComponent {
       textContent: CHANGE_BUTTON_TEXT,
     };
     const changeButtonComponent = new ButtonComponent(params);
+    changeButtonComponent.addComponentEventListener(IEvents.click, () =>
+      this.openMessageEditor(),
+    );
     return changeButtonComponent;
   }
 
@@ -104,8 +151,11 @@ export class MessageOptionComponent extends BaseComponent {
     });
   }
 
-  private removeMessageFromHistory(historyMessageView: HistoryMessageView) {
-    console.log("remove from history");
+  public removeMessageFromHistory(historyMessageView: HistoryMessageView) {
     historyMessageView.viewComponent.removeComponent();
+  }
+
+  public openMessageEditor() {
+    this.messageEditorComponent.openDialog();
   }
 }
