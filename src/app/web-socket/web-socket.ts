@@ -2,7 +2,6 @@ import { App } from "../app";
 import { Router } from "../router/router";
 import { HeaderView } from "../view/header/header-view";
 import { HistoryView } from "../view/main/index/message-view/history-view/history-view";
-import { HistoryMessageView } from "../view/main/index/message-view/history-view/messages-components/message-view";
 import { MessageView } from "../view/main/index/message-view/message-view";
 import { LoginForm } from "../view/main/login/form-component/form-component";
 import { User } from "./user";
