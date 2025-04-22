@@ -33,6 +33,7 @@ export class MyWebSocket {
     }
     const serverUrl = scheme + "://" + document.location.hostname + ":4000";
     const connection = new WebSocket(serverUrl, "json");
+    console.log(serverUrl);
     connection.onopen = function () {
       console.log("CONNECTED");
     };
