@@ -172,7 +172,7 @@ export class MyWebSocket {
         responseObject.type === ISocketType.MSG_DELETE &&
         responseObject.id === null
       ) {
-        console.log("user read you message");
+        console.log("delete");
         user.changeReadingStateResponseEvent(responseObject.payload, app);
       }
     };

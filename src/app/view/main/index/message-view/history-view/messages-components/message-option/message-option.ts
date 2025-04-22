@@ -26,6 +26,8 @@ export class MessageOptionComponent extends BaseComponent {
   public deleteButtonComponent: ButtonComponent;
   constructor(
     message: ISendMessageResponse,
+    connection: MyWebSocket,
+    historyMessage: HistoryMessageView,
   ) {
     const params: IBaseComponentParam = {
       classList: CssClasses.option,
@@ -34,15 +36,21 @@ export class MessageOptionComponent extends BaseComponent {
     this.stateComponent = this.createStateComponent(this.getStatus(message));
     this.changeButtonComponent = this.createChangeButtonComponent();
     this.deleteButtonComponent = this.createDeleteButtonComponent();
-    this.configComponent();
+    this.configComponent(message, connection.user, connection, historyMessage);
   }
 
-  private configComponent() {
+  private configComponent(
+    message: ISendMessageResponse,
+    user: User,
+    connection: MyWebSocket,
+    historyMessageView: HistoryMessageView,
+  ) {
     const wrapper = new BaseComponent({ classList: CssClasses.wrapper });
     wrapper.appendChildComponents([
       this.deleteButtonComponent,
       this.changeButtonComponent,
     ]);
+    this.addDeleteMessageEvent(message, user, connection, historyMessageView);
     this.appendChildComponents([wrapper, this.stateComponent]);
   }
 
@@ -97,6 +105,7 @@ export class MessageOptionComponent extends BaseComponent {
   }
 
   private removeMessageFromHistory(historyMessageView: HistoryMessageView) {
+    console.log("remove from history");
     historyMessageView.viewComponent.removeComponent();
   }
 }

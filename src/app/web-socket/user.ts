@@ -284,6 +284,7 @@ export class User {
       if (this.history) {
         this.history.push(message);
       }
+      message.status.isReaded = true;
       app.index.messageView.historyComponent.appendToMessage(
         message,
         connection,
@@ -379,6 +380,7 @@ export class User {
         },
       },
     };
+    console.log("delete send");
     connection.send(requestParams);
   }
 }

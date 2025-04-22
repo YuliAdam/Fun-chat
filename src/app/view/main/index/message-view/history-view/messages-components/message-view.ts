@@ -27,7 +27,7 @@ export class HistoryMessageView extends View {
     super(params);
     this.textComponent = this.createMessaggeText(message.text);
     this.infoComponent = this.getMessageInfo(message, connection);
-    this.optionComponent = this.getMessageOption(message);
+    this.optionComponent = this.getMessageOption(message, connection);
     this.configView();
   }
 
@@ -39,7 +39,9 @@ export class HistoryMessageView extends View {
   public addToMessageStyle() {
     this.viewComponent.addClassIfHasNot(CssClasses.messageTo);
     this.textComponent.addClassIfHasNot(CssClasses.textTo);
+    this.optionComponent.addClassIfHasNot("opacity");
     this.optionComponent.changeButtonComponent.hideButton();
+    this.optionComponent.deleteButtonComponent.hideButton();
   }
 
   private configView() {
@@ -66,7 +68,10 @@ export class HistoryMessageView extends View {
     return new MessageInfoComponent(message, connection);
   }
 
-  private getMessageOption(message: ISendMessageResponse) {
-    return new MessageOptionComponent(message);
+  private getMessageOption(
+    message: ISendMessageResponse,
+    connection: MyWebSocket,
+  ) {
+    return new MessageOptionComponent(message, connection, this);
   }
 }
