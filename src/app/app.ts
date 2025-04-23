@@ -56,6 +56,8 @@ export class App {
         callBack: () => {
           this.main.setContent(this.index.viewComponent);
           this.index.messageView.historyComponent.goToLastMessage();
+          this.header.navComponent.buttonsArr.infoButtonComponent.showButton();
+          this.header.navComponent.buttonsArr.logoutButtonComponent.showButton();
         },
       },
       {
@@ -64,24 +66,29 @@ export class App {
           this.user = new User();
           this.index = new IndexView(this.connection);
           this.main.setContent(this.login.viewComponent);
+          this.header.navComponent.buttonsArr.infoButtonComponent.showButton();
+          this.header.navComponent.buttonsArr.logoutButtonComponent.hideButton();
         },
       },
       {
         path: "",
         callBack: () => {
           this.main.setContent(this.login.viewComponent);
+          this.header.navComponent.buttonsArr.infoButtonComponent.showButton();
         },
       },
       {
         path: Pages.NOT_FOUND,
         callBack: () => {
           this.main.setContent(this.notFound.viewComponent);
+          this.header.navComponent.buttonsArr.infoButtonComponent.showButton();
         },
       },
       {
         path: Pages.INFO,
         callBack: () => {
           this.main.setContent(this.info.viewComponent);
+          this.header.navComponent.buttonsArr.infoButtonComponent.hideButton();
         },
       },
     ];
