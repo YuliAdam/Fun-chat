@@ -1,11 +1,13 @@
 import { App } from "../app";
 import { Router } from "../router/router";
 import { HeaderView } from "../view/header/header-view";
+import { IndexView } from "../view/main/index/index-view";
 import { HistoryView } from "../view/main/index/message-view/history-view/history-view";
 import { MessageView } from "../view/main/index/message-view/message-view";
 import { LoginForm } from "../view/main/login/form-component/form-component";
 import { User } from "./user";
 import {
+  IErrorDescription,
   ISocketRequestFormat,
   ISocketResponseFormat,
   ISocketType,
@@ -14,9 +16,11 @@ import {
 export class MyWebSocket {
   public user: User;
   public socket: WebSocket;
+  public app;
   constructor(user: User, app: App) {
     this.socket = this.connect();
     this.user = user;
+    this.app = app;
     this.configSocket(this.user, app);
   }
 
@@ -28,7 +32,6 @@ export class MyWebSocket {
     console.log("start socket");
     const serverUrl = "ws://localhost:4000";
     const connection = new WebSocket(serverUrl, "json");
-    console.log(serverUrl);
     connection.onopen = function () {
       console.log("CONNECTED");
     };
@@ -38,7 +41,11 @@ export class MyWebSocket {
   public send(request: ISocketRequestFormat) {
     console.log("send");
     console.log(JSON.stringify(request));
-    this.socket.send(MyWebSocket.stringifyRequest(request));
+    if (this.socket.readyState === WebSocket.OPEN) {
+      this.socket.send(MyWebSocket.stringifyRequest(request));
+    } else {
+      this.testConnection(this.app, this);
+    }
   }
 
   public setEventAfterLoginResponse(
@@ -99,8 +106,14 @@ export class MyWebSocket {
         user.setLoginUserParams(app, responseObject.payload.user, connection);
       }
       if (responseObject.type === ISocketType.ERROR) {
-        user.isLogined = false;
-        user.setErrorMessage(responseObject.payload.error);
+        console.log("error");
+        console.log("responseObject", responseObject);
+        if (responseObject.payload.error === IErrorDescription.SERVER_ERROR) {
+          connection.testConnection(app, connection);
+        } else {
+          user.isLogined = false;
+          user.setErrorMessage(responseObject.payload.error);
+        }
       }
       if (responseObject.type === ISocketType.USER_LOGOUT) {
         user.setLogoutResponse(app);
@@ -194,5 +207,32 @@ export class MyWebSocket {
 
   private changeMessageResponse(app: App, id: string, text: string) {
     app.index.messageView.historyComponent.changeMessageById(id, text);
+  }
+
+  private testConnection(app: App, connection: MyWebSocket) {
+    app.connectionDialog.openDialog();
+    connection.socket = connection.connect();
+    setTimeout(function returnConnection() {
+      console.log(connection.socket.readyState);
+      if (connection.socket.readyState !== connection.socket.OPEN) {
+        console.log("wait");
+        connection.socket = connection.connect();
+        setTimeout(() => returnConnection(), 500);
+      } else {
+        console.log("connected");
+        connection.setOnMessageEvent(connection.user, app, connection);
+        if (connection.user.username && connection.user.password) {
+          connection.user.loginUser(
+            connection,
+            connection.user.username,
+            connection.user.password,
+          );
+          app.index = new IndexView(connection);
+          app.main.setContent(app.index.viewComponent);
+          app.router.navigate("index", connection);
+        }
+        app.connectionDialog.closeDialog();
+      }
+    }, 500);
   }
 }

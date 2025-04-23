@@ -16,7 +16,7 @@ export enum ISocketType {
 
 export enum IErrorDescription {
   LOGIN_ERROR = "incorrect password",
-  
+  SERVER_ERROR = "internal server error",
 }
 
 export interface ErrorMessage {

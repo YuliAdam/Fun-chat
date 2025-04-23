@@ -57,7 +57,11 @@ export class HistoryView extends View {
     this.viewComponent.appendChildComponents([this.historyComponent]);
     let countFirstNotReadedMessage = 0;
     messageArr.forEach((mess, i) => {
-      if (!mess.status.isReaded && countFirstNotReadedMessage === 0) {
+      if (
+        !mess.status.isReaded &&
+        countFirstNotReadedMessage === 0 &&
+        mess.from !== connection.user.username
+      ) {
         this.newMessageLine = new NewMessageLine();
         this.historyComponent.appendChildComponents([this.newMessageLine]);
         countFirstNotReadedMessage++;

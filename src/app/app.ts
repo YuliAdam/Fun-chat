@@ -8,19 +8,22 @@ import { MyWebSocket } from "./web-socket/web-socket";
 import { IndexView } from "./view/main/index/index-view";
 import { InfoView } from "./view/main/info/info-view";
 import { User } from "./web-socket/user";
+import { ConnectionDialog } from "./view/connection/connection-dialog";
 
 export class App {
   private connection: MyWebSocket;
-  private router: Router;
-  private main: MainView;
+  public router: Router;
+  public main: MainView;
   private notFound: NotFoundView;
   private login: LoginView;
   public header: HeaderView;
   public index: IndexView;
   private info: InfoView;
   private user: User;
+  public connectionDialog: ConnectionDialog;
   constructor() {
     this.user = new User();
+    this.connectionDialog = new ConnectionDialog();
     this.connection = new MyWebSocket(this.user, this);
     this.router = new Router(this.createRoutes(), this.connection);
     this.main = new MainView();
@@ -38,6 +41,7 @@ export class App {
       this.header.getHTMLElement(),
       this.main.getHTMLElement(),
       footerView,
+      this.connectionDialog.getHTMLElement(),
     ]);
   }
 

@@ -1,0 +1,47 @@
+.dialog_text {
+    box-sizing: border-box;
+    text-align: center;
+    padding: 6vh 0;
+    height: 50%;
+    width: 100%;
+    margin: auto;
+    font: var(--title-font);
+    font-size: 1.5vw;
+    color: var(--black);
+    background-color: var(--white);
+    resize: none;
+}
+
+.option_dialog::backdrop {
+    position: fixed;
+    top: 0;
+    left: auto;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(24, 28, 41, 0.8);
+}
+
+.connection_dialog {
+    width: 50%;
+    height: 20%;
+    background: rgba(0, 0, 0, 0.3);
+    border-color: transparent;
+    border-radius: var(--border-radius-btn);
+    cursor: default;
+}
+
+@media screen and (min-width: 1280px) {
+    .dialog_text {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .dialog_text {
+        font-size: 13.5px;
+    }
+}
