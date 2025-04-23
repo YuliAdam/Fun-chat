@@ -96,7 +96,6 @@ export class MyWebSocket {
         responseObject.type === ISocketType.USER_LOGIN &&
         responseObject.payload.user.isLogined
       ) {
-        console.log("login");
         user.setLoginUserParams(app, responseObject.payload.user, connection);
       }
       if (responseObject.type === ISocketType.ERROR) {
@@ -104,15 +103,12 @@ export class MyWebSocket {
         user.setErrorMessage(responseObject.payload.error);
       }
       if (responseObject.type === ISocketType.USER_LOGOUT) {
-        console.log("logout");
         user.setLogoutResponse(app);
       }
       if (responseObject.type === ISocketType.USER_ACTIVE) {
-        console.log("activ");
         user.setActiveUsers.call(user, responseObject, app, connection);
       }
       if (responseObject.type === ISocketType.USER_INACTIVE) {
-        console.log("inactiv");
         user.setInactiveUsers.call(user, responseObject, app, connection);
       }
       if (responseObject.type === ISocketType.USER_EXTERNAL_LOGIN) {
@@ -143,21 +139,18 @@ export class MyWebSocket {
         responseObject.type === ISocketType.MSG_SEND &&
         responseObject.id === null
       ) {
-        console.log("receving message");
         user.receivingMessage(app, responseObject.payload.message, connection);
       }
       if (
         responseObject.type === ISocketType.MSG_READ &&
         responseObject.id !== null
       ) {
-        console.log("reading message");
         user.readingStateResponseEvent(app);
       }
       if (
         responseObject.type === ISocketType.MSG_READ &&
         responseObject.id === null
       ) {
-        console.log("user read you message");
         user.changeReadingStateResponseEvent(responseObject.payload, app);
       }
       if (
@@ -170,7 +163,6 @@ export class MyWebSocket {
         responseObject.type === ISocketType.MSG_EDIT &&
         responseObject.id === null
       ) {
-        console.log("edited");
         connection.changeMessageResponse(
           app,
           responseObject.payload.message.id,

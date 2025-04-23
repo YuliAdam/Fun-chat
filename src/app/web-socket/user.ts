@@ -96,6 +96,7 @@ export class User {
     this.username = null;
     this.password = null;
     this.isLogined = null;
+    this.selectedUsername = null;
   }
 
   public getActiveUsers(connection: MyWebSocket) {
@@ -263,13 +264,8 @@ export class User {
       }
     });
     if (count && username) {
-      console.log("add1");
-      console.log(app.index.usersView.allUsersComponent.usersComponents);
       app.index.usersView.allUsersComponent.usersComponents.forEach((user) => {
-        console.log(user.getHTMLElement());
-        console.log(user.usernameComponent.getTextContent());
         if (user.usernameComponent.getTextContent() === username) {
-          console.log("add2");
           user.setNewMessageComponent(count);
         }
       });
@@ -390,7 +386,6 @@ export class User {
         },
       },
     };
-    console.log("delete send");
     connection.send(requestParams);
     if (this.history) {
       this.history = this.history.filter((mess) => mess.id !== message.id);

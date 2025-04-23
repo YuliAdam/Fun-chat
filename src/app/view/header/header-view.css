@@ -3,7 +3,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    background-image: url('bla.jpg');
+    background-image: url('../../../../img/bla.jpg');
     background-repeat: repeat-x;
     background-size: contain;
     background-position: center;

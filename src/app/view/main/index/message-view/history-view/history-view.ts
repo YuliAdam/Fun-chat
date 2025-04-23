@@ -13,7 +13,7 @@ import { NewMessageLine } from "./new-message-line-view/new-message-line";
 const CssClasses = {
   history: ["message_history"],
   initialText: ["history_initial"],
-  wrapper: ["histoty_wrapper"],
+  wrapper: ["history_wrapper"],
 };
 
 const INITIAL_TEXT = "Send you'r first message";
@@ -27,11 +27,9 @@ export class HistoryView extends View {
       classList: CssClasses.wrapper,
     };
     super(params);
-    this.historyComponent = new BaseComponent({
-      classList: CssClasses.history,
-    });
+    this.historyComponent = this.createHistoryComponent();
     this.newMessageLine = null;
-    this.addClickHistoryEvent(connection);
+    this.addReadHistoryEvent(connection);
     this.messages = [];
     this.configView();
   }
@@ -42,22 +40,6 @@ export class HistoryView extends View {
       el.children[el.children.length - 1].scrollIntoView(false);
     }
   }
-
-  private configView() {
-    this.viewComponent.appendChildComponents([this.historyComponent]);
-    this.historyComponent.appendChildComponents([
-      this.createInitialTextElement(),
-    ]);
-  }
-
-  private createInitialTextElement() {
-    const params: IBaseComponentParam = {
-      classList: CssClasses.initialText,
-      textContent: INITIAL_TEXT,
-    };
-    return new BaseComponent(params);
-  }
-
   public clearMessageHistory() {
     this.historyComponent.removeChildren();
     this.historyComponent.appendChildComponents([
@@ -70,8 +52,9 @@ export class HistoryView extends View {
     messageArr: ISendMessageResponse[],
     connection: MyWebSocket,
   ) {
-    this.historyComponent.removeChildren();
-    this.messages = [];
+    this.historyComponent.removeComponent();
+    this.historyComponent = this.createHistoryComponent();
+    this.viewComponent.appendChildComponents([this.historyComponent]);
     let countFirstNotReadedMessage = 0;
     messageArr.forEach((mess, i) => {
       if (!mess.status.isReaded && countFirstNotReadedMessage === 0) {
@@ -97,6 +80,13 @@ export class HistoryView extends View {
       } else if (this.newMessageLine) {
         this.newMessageLine.scrollToNewLineMessage();
       }
+    });
+    setTimeout(() => this.addScrollReadHistoryEvent(connection), 100);
+  }
+
+  private createHistoryComponent() {
+    return new BaseComponent({
+      classList: CssClasses.history,
     });
   }
 
@@ -140,10 +130,32 @@ export class HistoryView extends View {
     });
   }
 
-  private addClickHistoryEvent(connection: MyWebSocket) {
+  private configView() {
+    this.viewComponent.appendChildComponents([this.historyComponent]);
+    this.historyComponent.appendChildComponents([
+      this.createInitialTextElement(),
+    ]);
+  }
+
+  private createInitialTextElement() {
+    const params: IBaseComponentParam = {
+      classList: CssClasses.initialText,
+      textContent: INITIAL_TEXT,
+    };
+    return new BaseComponent(params);
+  }
+
+  private addReadHistoryEvent(connection: MyWebSocket) {
     this.viewComponent.addComponentEventListener(IEvents.click, () =>
       this.readMessage(connection),
     );
+  }
+
+  public addScrollReadHistoryEvent(connection: MyWebSocket) {
+    this.historyComponent.addComponentEventListener(IEvents.scroll, () => {
+      console.log("scroll");
+      this.readMessage(connection);
+    });
   }
 
   private readMessage(connection: MyWebSocket) {

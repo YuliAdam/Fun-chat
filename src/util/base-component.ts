@@ -9,6 +9,7 @@ export enum IEvents {
   submit = "submit",
   input = "input",
   keydown = "keydown",
+  scroll = "scroll",
 }
 
 export class BaseComponent {

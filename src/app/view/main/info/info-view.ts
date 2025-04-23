@@ -16,8 +16,7 @@ const CssClasses = {
   back: ["info_back"],
 };
 
-const INFO_TEXT = `These application is create by Fun Chat task as part of the RSSchool JS/FE 2025. Thank you by review.
-Author @YuliAdam`;
+const INFO_TEXT = `These application is create by Fun Chat task as part of the RSSchool JS/FE 2025. Thank you by review. Author @YuliAdam`;
 const BACK_BUTTON_TEXT = "Back";
 
 export class InfoView extends View {

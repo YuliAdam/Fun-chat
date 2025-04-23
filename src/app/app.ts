@@ -61,6 +61,8 @@ export class App {
       {
         path: Pages.LOGIN,
         callBack: () => {
+          this.user = new User();
+          this.index = new IndexView(this.connection);
           this.main.setContent(this.login.viewComponent);
         },
       },
