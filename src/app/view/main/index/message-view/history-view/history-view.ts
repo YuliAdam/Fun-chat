@@ -16,7 +16,8 @@ const CssClasses = {
   wrapper: ["history_wrapper"],
 };
 
-const INITIAL_TEXT = "Send you'r first message";
+const INITIAL_TEXT = "Choose user and send your first message";
+const EMPTY_HISTORY_TEXT = "Send your first message";
 
 export class HistoryView extends View {
   public historyComponent: BaseComponent;
@@ -31,7 +32,7 @@ export class HistoryView extends View {
     this.newMessageLine = null;
     this.addReadHistoryEvent(connection);
     this.messages = [];
-    this.configView();
+    this.configView(connection);
   }
 
   public goToLastMessage() {
@@ -40,10 +41,10 @@ export class HistoryView extends View {
       el.children[el.children.length - 1].scrollIntoView(false);
     }
   }
-  public clearMessageHistory() {
+  public clearMessageHistory(connection: MyWebSocket) {
     this.historyComponent.removeChildren();
     this.historyComponent.appendChildComponents([
-      this.createInitialTextElement(),
+      this.createInitialTextElement(connection),
     ]);
     this.messages = [];
   }
@@ -134,17 +135,20 @@ export class HistoryView extends View {
     });
   }
 
-  private configView() {
+  private configView(connection: MyWebSocket) {
     this.viewComponent.appendChildComponents([this.historyComponent]);
     this.historyComponent.appendChildComponents([
-      this.createInitialTextElement(),
+      this.createInitialTextElement(connection),
     ]);
   }
 
-  private createInitialTextElement() {
+  private createInitialTextElement(connection: MyWebSocket) {
+    const text = connection.user.selectedUsername
+      ? EMPTY_HISTORY_TEXT
+      : INITIAL_TEXT;
     const params: IBaseComponentParam = {
       classList: CssClasses.initialText,
-      textContent: INITIAL_TEXT,
+      textContent: text,
     };
     return new BaseComponent(params);
   }

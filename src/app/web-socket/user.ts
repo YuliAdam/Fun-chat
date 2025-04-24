@@ -86,9 +86,9 @@ export class User {
     }
   }
 
-  public setLogoutResponse(app: App) {
+  public setLogoutResponse(app: App, connection: MyWebSocket) {
     app.index.usersView.allUsersComponent.viewComponent.removeChildren();
-    app.index.messageView.historyComponent.clearMessageHistory();
+    app.index.messageView.historyComponent.clearMessageHistory(connection);
     app.index.messageView.headerComponent.clearHeader();
   }
 

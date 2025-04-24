@@ -110,7 +110,7 @@ export class UserView extends View {
           connection,
         );
       } else {
-        messageView.historyComponent.clearMessageHistory();
+        messageView.historyComponent.clearMessageHistory(connection);
       }
     }
   }

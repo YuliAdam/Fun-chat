@@ -29,7 +29,7 @@ export class FooterView extends View {
     private static createTextComponent(): BaseComponent {
         const h1Param: IBaseComponentParam = {
             tag: "p",
-            textContent: "/2025",
+            textContent: "/2025/RSchool",
             classList: CssClasses.title,
         };
         return new BaseComponent(h1Param);

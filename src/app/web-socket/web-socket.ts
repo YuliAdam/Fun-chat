@@ -116,7 +116,7 @@ export class MyWebSocket {
         }
       }
       if (responseObject.type === ISocketType.USER_LOGOUT) {
-        user.setLogoutResponse(app);
+        user.setLogoutResponse(app, connection);
       }
       if (responseObject.type === ISocketType.USER_ACTIVE) {
         user.setActiveUsers.call(user, responseObject, app, connection);
